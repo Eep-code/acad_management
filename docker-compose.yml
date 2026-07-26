@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_DB: acad_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - acad-network
+
+  acad-backend-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: acad-app-image
+    container_name: acad-backend-app
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5433/acad_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+
+      # If you're using Spring Boot 3.x
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+
+    depends_on:
+      - postgres
+    networks:
+      - acad-network
+
+
+volumes:
+  postgres-data:
+
+networks:
+  acad-network:
+    driver: bridge
