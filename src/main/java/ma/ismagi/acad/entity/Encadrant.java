@@ -1,14 +1,13 @@
 package ma.ismagi.acad.entity;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ma.ismagi.acad.enums.Role;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,12 +16,18 @@ import java.util.List;
 @Table(name = "encadrants")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@DiscriminatorValue("ROLE_ENCADRANT")
-public class Encadrant extends User{
+@AllArgsConstructor
+public class Encadrant {
+
+    @Id
+    private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
 
     @OneToMany(mappedBy = "encadrant")
-    private List<Groupe> groupes;
-
+    private List<Groupe> groupes = new ArrayList<>();
 }

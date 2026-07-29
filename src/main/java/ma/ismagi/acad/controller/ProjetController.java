@@ -24,22 +24,22 @@ public class ProjetController {
 
     @GetMapping("/{id}")
     public ProjetResponse getById(Long id) {
-        return null;
+        return projetService.getById(id);
     }
 
     @PostMapping
     public ProjetResponse create(CreateProjetRequest request) {
-        return null;
+        return projetService.create(request);
     }
 
     @PutMapping("/{id}")
     public ProjetResponse update(Long id, UpdateProjectRequest request) {
-        return null;
+        return projetService.update(id, request);
     }
 
     @DeleteMapping("/{id}")
     public void delete(Long id) {
-
+        projetService.delete(id);
     }
 
 }

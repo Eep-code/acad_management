@@ -4,9 +4,6 @@ import lombok.*;
 
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class UpdateProjectRequest {
 
     private Long id;

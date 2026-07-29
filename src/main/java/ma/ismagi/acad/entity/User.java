@@ -9,24 +9,31 @@ import ma.ismagi.acad.enums.Role;
 
 import java.util.List;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
-@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nom;
+
     private String prenom;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
     private String password;
+
     @Enumerated(EnumType.STRING)
-    @Column(insertable=false, updatable=false)
+    @Column(nullable = false)
     private Role role;
 
+    @Column(nullable = false)
+    private boolean active = true;
 }

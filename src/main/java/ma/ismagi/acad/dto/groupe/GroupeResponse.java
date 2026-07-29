@@ -9,7 +9,7 @@ import ma.ismagi.acad.entity.Etudiant;
 
 import java.util.List;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter
+@Getter @Setter
 public class GroupeResponse {
 
     private Long id;

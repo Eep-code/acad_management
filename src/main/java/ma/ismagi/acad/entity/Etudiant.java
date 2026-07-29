@@ -5,12 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ma.ismagi.acad.enums.Role;
 
 @Entity
 @Table(name = "etudiants")
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor
-@DiscriminatorValue("ROLE_ETUDIANT")
-public class Etudiant extends User {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Etudiant {
+
+    @Id
+    private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "groupe_id")
