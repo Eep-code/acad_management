@@ -4,16 +4,12 @@ import lombok.RequiredArgsConstructor;
 import ma.ismagi.acad.dto.user.CreateUserRequest;
 import ma.ismagi.acad.dto.user.UpdateUserRequest;
 import ma.ismagi.acad.dto.user.UserResponse;
-import ma.ismagi.acad.entity.Encadrant;
-import ma.ismagi.acad.entity.Etudiant;
-import ma.ismagi.acad.entity.User;
+import ma.ismagi.acad.entity.*;
 import ma.ismagi.acad.enums.Role;
 import ma.ismagi.acad.mapper.UserMapper;
 
 
-import ma.ismagi.acad.repository.EncadrantRepository;
-import ma.ismagi.acad.repository.EtudiantRepository;
-import ma.ismagi.acad.repository.UserRepository;
+import ma.ismagi.acad.repository.*;
 import ma.ismagi.acad.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +24,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final EncadrantRepository encadrantRepository;
     private final EtudiantRepository etudiantRepository;
+    private final AdminRepository adminRepository;
+    private final ResponsableRepository responsableRepository;
     private final UserMapper userMapper;
 
     @Override
@@ -51,6 +49,18 @@ public class UserServiceImpl implements UserService {
                 Etudiant etudiant = new Etudiant();
                 etudiant.setUser(user);
                 etudiantRepository.save(etudiant);
+            }
+
+            case ADMIN -> {
+                Admin admin = new Admin();
+                admin.setUser(user);
+                adminRepository.save(admin);
+            }
+
+            case RESPONSABLE -> {
+                 Responsable responsable = new Responsable();
+                 responsable.setUser(user);
+                 responsableRepository.save(responsable);
             }
 
             default -> throw new IllegalArgumentException("Unsupported role");
