@@ -11,6 +11,7 @@ import ma.ismagi.acad.mapper.UserMapper;
 
 import ma.ismagi.acad.repository.*;
 import ma.ismagi.acad.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final EtudiantRepository etudiantRepository;
     private final AdminRepository adminRepository;
     private final ResponsableRepository responsableRepository;
+    private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
     @Override
@@ -34,6 +36,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.toEntity(request);
         user.setRole(request.getRole());
         user.setActive(true);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         user = userRepository.save(user);
 
